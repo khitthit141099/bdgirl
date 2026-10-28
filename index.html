@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="my" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Favorite Person 💖 Happy Birthday! 🎂✨</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Noto+Sans+Myanmar:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Tone.js for Birthday Melody & Sound Effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
+    <style>
+        :root {
+            --gold-light: #fde68a;
+            --gold-main: #f59e0b;
+            --rose-glow: #fb7185;
+            --bg-deep: #0d0417;
+        }
+
+        body {
+            background: radial-gradient(circle at 50% 15%, #2a0a2e 0%, #12051c 50%, #090310 100%);
+            background-color: var(--bg-deep);
+            color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', 'Noto Sans Myanmar', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        .font-cinematic { font-family: 'Cinzel', 'Playfair Display', serif; }
+        .font-editorial { font-family: 'Playfair Display', 'Noto Sans Myanmar', serif; }
+        .font-myanmar { font-family: 'Noto Sans Myanmar', sans-serif; line-height: 1.9; }
+
+        /* Shimmering Gold Typography */
+        .text-gold-shimmer {
+            background: linear-gradient(to right, #fde68a 0%, #f59e0b 25%, #fffbeb 50%, #fb7185 75%, #fde68a 100%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shimmerText 4s linear infinite;
+        }
+
+        @keyframes shimmerText {
+            to { background-position: 200% center; }
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(253, 230, 138, 0.18);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+        }
+
+        .glass-card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .glass-card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(251, 113, 133, 0.5);
+            box-shadow: 0 25px 60px rgba(251, 113, 133, 0.2), 0 0 25px rgba(253, 230, 138, 0.2);
+        }
+
+        /* Falling Emoji Items */
+        .falling-item {
+            position: fixed;
+            top: -80px;
+            z-index: 40;
+            user-select: none;
+            pointer-events: auto;
+            cursor: pointer;
+            animation: fallDown linear forwards;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.45));
+            transition: transform 0.15s ease;
+        }
+        .falling-item:hover { transform: scale(1.4) rotate(15deg) !important; }
+
+        @keyframes fallDown {
+            0% { transform: translateY(-80px) translateX(0px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(110vh) translateX(var(--sway, 40px)) rotate(var(--rot, 360deg)); opacity: 0; }
+        }
+
+        /* Realistic Candle Flame CSS */
+        .flame-wrapper {
+            position: relative;
+            width: 24px;
+            height: 42px;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .flame {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 18px;
+            height: 36px;
+            background: radial-gradient(ellipse at bottom, #ffffff 0%, #fde047 35%, #f97316 75%, rgba(239, 68, 68, 0) 100%);
+            border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+            box-shadow: 0 0 18px 6px rgba(251, 191, 36, 0.65), 0 0 40px 15px rgba(249, 115, 22, 0.4), 0 -10px 25px 5px rgba(254, 240, 138, 0.5);
+            animation: flicker 1.4s ease-in-out infinite alternate;
+            transform-origin: 50% 90%;
+            transition: all 0.4s ease;
+        }
+
+        .flame.blown-out {
+            opacity: 0;
+            transform: translateX(-50%) scale(0.1) translateY(-20px);
+            pointer-events: none;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
+            25% { transform: translateX(-50%) scale(1.06, 0.96) rotate(2deg); }
+            50% { transform: translateX(-50%) scale(0.95, 1.05) rotate(-1deg); }
+            75% { transform: translateX(-50%) scale(1.04, 0.98) rotate(3deg); }
+            100% { transform: translateX(-50%) scale(0.98, 1.03) rotate(-2deg); }
+        }
+
+        .smoke {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            width: 8px;
+            height: 8px;
+            background: rgba(203, 213, 225, 0.6);
+            border-radius: 50%;
+            filter: blur(4px);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .smoke.active { animation: smokeRise 2s ease-out forwards; }
+        @keyframes smokeRise {
+            0% { opacity: 0.8; transform: translateX(-50%) translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateX(-20px) translateY(-70px) scale(4.5); }
+        }
+
+        /* Polaroid Card Styling */
+        .polaroid-card {
+            background: #fffdf9;
+            padding: 14px 14px 26px 14px;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(253, 230, 138, 0.12);
+            transition: all 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: #1e293b;
+        }
+        .polaroid-card:hover {
+            transform: rotate(0deg) scale(1.06) translateY(-10px) !important;
+            z-index: 30;
+            box-shadow: 0 30px 60px rgba(251, 113, 133, 0.35);
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-14px) rotate(2deg); }
+        }
+        .animate-float { animation: floatSlow 5s ease-in-out infinite; }
+
+        @keyframes runAcrossTrack {
+            0% { transform: translateX(-120%) scaleX(1); }
+            48% { transform: translateX(120%) scaleX(1); }
+            50% { transform: translateX(120%) scaleX(-1); }
+            98% { transform: translateX(-120%) scaleX(-1); }
+            100% { transform: translateX(-120%) scaleX(1); }
+        }
+
+        @keyframes cuteBounce {
+            0%, 100% { transform: translateY(0px) rotate(-4deg) scale(1); }
+            50% { transform: translateY(-14px) rotate(6deg) scale(1.08); }
+        }
+
+        @keyframes heartFloatUp {
+            0% { opacity: 0; transform: translateY(10px) scale(0.6); }
+            50% { opacity: 1; transform: translateY(-12px) scale(1.15); }
+            100% { opacity: 0; transform: translateY(-32px) scale(0.8); }
+        }
+
+        .runner-parade { animation: runAcrossTrack 11s ease-in-out infinite; }
+        .cute-hopper { display: inline-flex; flex-direction: column; align-items: center; animation: cuteBounce 0.55s ease-in-out infinite; }
+        .cute-hopper-delay-1 { animation-delay: 0.12s; }
+        .cute-hopper-delay-2 { animation-delay: 0.24s; }
+        .cute-hopper-delay-3 { animation-delay: 0.36s; }
+        .cute-hopper-delay-4 { animation-delay: 0.48s; }
+        .mini-heart-pop { animation: heartFloatUp 1.6s ease-in-out infinite; }
+
+        .cinema-bar-top, .cinema-bar-bottom { height: 8vh; background: #000; width: 100%; z-index: 105; transition: height 1s ease; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #090514; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, #fb7185, #f59e0b); border-radius: 9999px; }
+    </style>
+</head>
+<body class="relative min-h-screen selection:bg-rose-500 selection:text-white">
+
+    <canvas id="bgCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+    <div id="fallingContainer" class="fixed inset-0 pointer-events-none z-40 overflow-hidden"></div>
+
+    <!-- 1. CINEMATIC INTRO OVERLAY -->
+    <div id="cinematicIntro" class="fixed inset-0 z-50 bg-[#07020d] flex flex-col justify-between items-center overflow-hidden transition-opacity duration-1000">
+        <div class="cinema-bar-top"></div>
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div class="w-96 h-96 md:w-[34rem] md:h-[34rem] rounded-full bg-rose-500/20 blur-[130px] animate-pulse"></div>
+            <div class="w-80 h-80 rounded-full bg-amber-500/15 blur-[110px] animate-pulse"></div>
+        </div>
+        <div class="relative z-10 max-w-3xl mx-auto px-6 text-center flex flex-col items-center justify-center flex-1">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/15 border border-rose-400/30 text-rose-300 text-xs tracking-widest uppercase mb-8">
+                <span>✨ A Special Birthday Dedication 💖</span>
+            </div>
+            <div id="trailerStage" class="min-h-[180px] flex flex-col items-center justify-center transition-all duration-700">
+                <p id="trailerSub" class="text-rose-300/90 uppercase tracking-[0.3em] text-xs md:text-sm mb-3 font-cinematic">Celebrating A Wonderful Soul</p>
+                <h1 id="trailerMain" class="text-2xl sm:text-4xl md:text-5xl font-bold font-myanmar text-gold-shimmer leading-relaxed">
+                    ဒီနေ့လေးက... ထူးခြားတဲ့ လူသားလေးတစ်ယောက် လူ့လောကထဲ ရောက်လာခဲ့တဲ့ အလှဆုံးနေ့ရက်လေး 🌸✨
+                </h1>
+            </div>
+            <div class="flex items-center gap-2 my-6">
+                <span id="dot0" class="w-8 h-1.5 rounded-full bg-rose-400 transition-all duration-300"></span>
+                <span id="dot1" class="w-2 h-1.5 rounded-full bg-white/20 transition-all duration-300"></span>
+                <span id="dot2" class="w-2 h-1.5 rounded-full bg-white/20 transition-all duration-300"></span>
+                <span id="dot3" class="w-2 h-1.5 rounded-full bg-white/20 transition-all duration-300"></span>
+            </div>
+            <div class="flex flex-wrap items-center justify-center gap-4 mt-4">
+                <button onclick="advanceTrailer()" class="px-6 py-3.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-myanmar text-sm sm:text-base transition flex items-center gap-2">
+                    <span>နောက်တစ်ခု (Next)</span><span>💌</span>
+                </button>
+                <button onclick="startMainExperience()" class="group relative px-8 py-4 rounded-2xl bg-gradient-to-r from-rose-400 via-pink-500 to-amber-400 text-slate-950 font-extrabold font-myanmar text-base sm:text-lg shadow-[0_0_35px_rgba(251,113,133,0.5)] hover:scale-105 transition-all duration-300 flex items-center gap-3">
+                    <span>✨ မွေးနေ့စာမျက်နှာသို့ ဝင်ရောက်မည် 🎂</span>
+                </button>
+            </div>
+            <p class="text-xs text-slate-400 mt-6 font-myanmar">💡 အသံဖွင့်ထားပါ — ပန်းပွင့်မိုးများ၊ ကိတ်မုန့်များ၊ ဖယောင်းတိုင်များနှင့် တေးသံသာ ပါဝင်ပါသည် 🎵</p>
+        </div>
+        <div class="cinema-bar-bottom"></div>
+    </div>
+
+    <!-- 2. FLOATING TOP CONTROL BAR -->
+    <header class="sticky top-3 z-40 px-3 sm:px-6 max-w-6xl mx-auto">
+        <div class="glass-card rounded-2xl px-4 py-2.5 flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl animate-pulse">💖</span>
+                <div>
+                    <span class="font-cinematic font-bold text-sm sm:text-base text-gold-shimmer tracking-wider block leading-none">HAPPY BIRTHDAY</span>
+                    <span class="text-[11px] text-rose-300 font-myanmar">ချစ်ရသော လူသားလေးအတွက် ✨</span>
+                </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                <button onclick="triggerMassiveBurst('heart')" class="px-3 py-1.5 rounded-xl bg-pink-500/20 hover:bg-pink-500/35 border border-pink-400/40 text-pink-200 text-xs sm:text-sm font-myanmar transition">🌸 ပန်းပွင့်မိုး</button>
+                <button onclick="triggerMassiveBurst('cake')" class="px-3 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 text-xs sm:text-sm font-myanmar transition">🎂 ကိတ်မုန့်မိုး</button>
+                <button onclick="triggerMassiveBurst('candle')" class="px-3 py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/35 border border-rose-400/40 text-rose-200 text-xs sm:text-sm font-myanmar transition">🕯️ ဖယောင်းတိုင်မိုး</button>
+                <button id="rainToggleBtn" onclick="toggleContinuousRain()" class="px-3 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/35 border border-emerald-400/40 text-emerald-200 text-xs sm:text-sm font-myanmar transition"><span id="rainToggleText">မိုးရွာနေဆဲ (ON)</span></button>
+                <button id="musicBtn" onclick="toggleBirthdayMusic()" class="px-3 py-1.5 rounded-xl bg-purple-500/20 hover:bg-purple-500/35 border border-purple-400/40 text-purple-200 text-xs sm:text-sm font-myanmar transition"><span id="musicIcon">🎵</span> <span id="musicText" class="hidden sm:inline">သီချင်းဖွင့်</span></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 3. MAIN HERO SECTION -->
+    <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-10 pb-24 space-y-24">
+        <section class="text-center relative pt-6">
+            <div class="inline-flex items-center gap-2 px-5 py-1.5 rounded-full glass-card text-rose-200 text-xs sm:text-sm font-myanmar mb-6 animate-float border-rose-400/40">
+                <span>✨</span><span>အထူးနေ့ရက်လေးအတွက် အမှတ်တရ မွေးနေ့ဆုတောင်း</span><span>🎂</span>
+            </div>
+            <h1 class="font-cinematic text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-gold-shimmer drop-shadow-[0_10px_30px_rgba(251,113,133,0.35)] leading-tight">
+                Happy Birthday <br class="sm:hidden" /> to You!
+            </h1>
+            <p class="text-rose-200/90 font-editorial italic text-base sm:text-xl mt-2">"Wishing you a year filled with pure magic, laughter, and endless smiles..." 🌸✨</p>
+
+            <div class="mt-6 flex flex-wrap items-center justify-center gap-2">
+                <span class="text-rose-300/80 text-sm font-myanmar">သို့ —</span>
+                <span class="px-6 py-2 rounded-2xl bg-gradient-to-r from-rose-500/25 via-pink-500/20 to-amber-500/25 border border-rose-300/50 text-amber-200 font-bold font-myanmar text-xl sm:text-3xl shadow-[0_0_25px_rgba(251,113,133,0.3)]">
+                    ချစ်ရသော လူသားလေး 💖
+                </span>
+            </div>
+
+            <!-- Rotating Burmese Wishes -->
+            <div class="max-w-3xl mx-auto mt-8 glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden border-rose-300/30">
+                <div class="absolute -top-10 -right-10 text-8xl opacity-10 select-none">💖</div>
+                <p id="rotatingWishText" class="text-lg sm:text-xl md:text-2xl font-myanmar text-slate-100 font-medium leading-relaxed min-h-[4.5rem] flex items-center justify-center transition-opacity duration-200">
+                    "Happy Birthday to You! 🎂 အသက်တစ်နှစ် ပိုကြီးလာပေမယ့် စိတ်မပူပါနဲ့... ရုပ်ကတော့ ၁၆ နှစ် တစ်ရက်လိုပဲ ရှိသေးတယ်လို့ ပြောလို့ရပါသေးတယ်! 🥰✨"
+                </p>
+                <div class="mt-6 flex flex-wrap justify-center gap-3">
+                    <button onclick="nextFunnyQuote()" class="px-5 py-2.5 rounded-xl bg-amber-400/20 hover:bg-amber-400/30 border border-amber-300/40 text-amber-200 text-sm font-myanmar transition flex items-center gap-2">
+                        <span>💌 နောက်ထပ် စာသားလေးတွေ ဖတ်မယ်</span>
+                    </button>
+                    <a href="#cakeSection" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold text-sm font-myanmar transition shadow-lg shadow-rose-500/30">
+                        <span>🕯️ ဖယောင်းတိုင် မီးသွားမှုတ်မယ်</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 3 Profile Stat Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-10 max-w-4xl mx-auto">
+                <div class="glass-card glass-card-hover rounded-3xl p-6 text-center border-rose-300/30">
+                    <div class="text-4xl mb-2">🧚‍♀️✨</div>
+                    <div class="text-xs sm:text-sm text-rose-200/80 font-myanmar">ရုပ်ရည်ခန့်မှန်းချက်</div>
+                    <div class="text-xl sm:text-2xl font-extrabold text-amber-300 font-myanmar mt-1.5">၁၆ နှစ် တစ်ရက်လို</div>
+                    <div class="inline-block mt-2 px-3 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-xs text-emerald-300 font-myanmar">အတည်ပြုပြီး ✅</div>
+                </div>
+                <div class="glass-card glass-card-hover rounded-3xl p-6 text-center border-amber-300/30">
+                    <div class="text-4xl mb-2">🍔🍕🍰</div>
+                    <div class="text-xs sm:text-sm text-rose-200/80 font-myanmar">မုန့်စားနိုင်စွမ်းအား</div>
+                    <div class="text-xl sm:text-2xl font-extrabold text-amber-300 font-myanmar mt-1.5">999999%</div>
+                    <div class="inline-block mt-2 px-3 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-xs text-amber-200 font-myanmar">မြင်သမျှအကုန်စား 😋</div>
+                </div>
+                <div class="glass-card glass-card-hover rounded-3xl p-6 text-center border-pink-400/40">
+                    <div class="text-4xl mb-2">💍💘</div>
+                    <div class="text-xs sm:text-sm text-rose-200/80 font-myanmar">အချစ်ရေး ဟောကိန်း</div>
+                    <div class="text-xl sm:text-2xl font-extrabold text-rose-300 font-myanmar mt-1.5">ဒီနှစ်အကုန်လင်ရမည်</div>
+                    <div class="inline-block mt-2 px-3 py-0.5 rounded-full bg-rose-500/25 border border-rose-400/40 text-xs text-rose-200 font-myanmar">၁၀၀% သေချာသည် 💖</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. CAKE & CANDLE BLOWING SECTION -->
+        <section id="cakeSection" class="glass-card rounded-3xl p-6 sm:p-12 text-center relative overflow-hidden">
+            <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-rose-500/15 rounded-full blur-3xl pointer-events-none"></div>
+            <span class="px-4 py-1 rounded-full bg-rose-500/20 border border-rose-400/30 text-rose-300 text-xs font-myanmar">🕯️ Make A Wish My Favorite Person</span>
+            <h2 class="text-2xl sm:text-4xl font-bold font-myanmar text-gold-shimmer mt-3">ဆုတောင်းပြီး ဖယောင်းတိုင် မီးမှုတ်ပါ 🎂💖</h2>
+            <p class="text-slate-300 text-sm sm:text-base font-myanmar max-w-xl mx-auto mt-2">မျက်စိလေးမှိတ်၊ ရင်ထဲက လိုချင်တဲ့ ဆုလေးတောင်းပြီးရင် ဖယောင်းတိုင်မီးတောက်လေးတွေကို နှိပ်ပါ သို့မဟုတ် အောက်ကခလုတ်ကိုနှိပ်ပြီး မီးမှုတ်လိုက်ပါ!</p>
+
+            <div class="my-12 flex flex-col items-center justify-center select-none">
+                <div class="flex items-end justify-center gap-5 sm:gap-8 mb-[-6px] z-20">
+                    <!-- Candles -->
+                    <div class="flex flex-col items-center group cursor-pointer" onclick="blowSingleCandle(0)">
+                        <div class="flame-wrapper"><div id="flame-0" class="flame"></div><div id="smoke-0" class="smoke"></div></div>
+                        <div class="w-4 sm:w-5 h-16 sm:h-20 rounded-t-md bg-gradient-to-b from-amber-100 via-pink-200 to-rose-300 border-2 border-amber-300 shadow-lg"></div>
+                    </div>
+                    <div class="flex flex-col items-center group cursor-pointer" onclick="blowSingleCandle(1)">
+                        <div class="flame-wrapper"><div id="flame-1" class="flame"></div><div id="smoke-1" class="smoke"></div></div>
+                        <div class="w-4 sm:w-5 h-20 sm:h-24 rounded-t-md bg-gradient-to-b from-amber-100 via-amber-200 to-amber-400 border-2 border-amber-300 shadow-lg"></div>
+                    </div>
+                    <div class="flex flex-col items-center group cursor-pointer" onclick="blowSingleCandle(2)">
+                        <div class="flame-wrapper"><div id="flame-2" class="flame"></div><div id="smoke-2" class="smoke"></div></div>
+                        <div class="w-5 sm:w-6 h-24 sm:h-28 rounded-t-md bg-gradient-to-b from-white via-rose-200 to-rose-400 border-2 border-amber-300 shadow-lg flex items-center justify-center"><span class="text-[10px] font-bold text-rose-900 rotate-90 tracking-widest">LOVE</span></div>
+                    </div>
+                    <div class="flex flex-col items-center group cursor-pointer" onclick="blowSingleCandle(3)">
+                        <div class="flame-wrapper"><div id="flame-3" class="flame"></div><div id="smoke-3" class="smoke"></div></div>
+                        <div class="w-4 sm:w-5 h-20 sm:h-24 rounded-t-md bg-gradient-to-b from-amber-100 via-purple-200 to-purple-400 border-2 border-amber-300 shadow-lg"></div>
+                    </div>
+                    <div class="flex flex-col items-center group cursor-pointer" onclick="blowSingleCandle(4)">
+                        <div class="flame-wrapper"><div id="flame-4" class="flame"></div><div id="smoke-4" class="smoke"></div></div>
+                        <div class="w-4 sm:w-5 h-16 sm:h-20 rounded-t-md bg-gradient-to-b from-amber-100 via-pink-200 to-rose-300 border-2 border-amber-300 shadow-lg"></div>
+                    </div>
+                </div>
+                <div class="w-56 sm:w-72 h-20 sm:h-24 bg-gradient-to-b from-rose-200 via-rose-300 to-rose-400 rounded-t-3xl border-4 border-amber-300/80 relative shadow-inner flex items-center justify-center">
+                    <span class="font-cinematic font-extrabold text-rose-950/80 text-sm sm:text-base tracking-widest mt-4">✨ MAKE A WISH ✨</span>
+                </div>
+                <div class="w-72 sm:w-96 h-24 sm:h-28 bg-gradient-to-b from-amber-200 via-amber-300 to-amber-500 rounded-t-2xl rounded-b-3xl border-4 border-amber-200 relative shadow-[0_20px_50px_rgba(245,158,11,0.4)] flex items-center justify-around px-4">
+                    <span class="text-2xl">💖</span><span class="font-cinematic font-bold text-amber-950 text-sm sm:text-lg tracking-wider">HAPPY BIRTHDAY</span><span class="text-2xl">💖</span>
+                </div>
+                <div class="w-80 sm:w-[28rem] h-5 bg-gradient-to-r from-amber-600 via-yellow-200 to-amber-600 rounded-full shadow-2xl"></div>
+            </div>
+
+            <!-- Success Banner with Running Cute Characters -->
+            <div id="wishSuccessBanner" class="hidden max-w-2xl mx-auto mb-8 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-rose-500/25 via-pink-500/25 to-amber-500/25 border-2 border-amber-300/60 shadow-[0_0_45px_rgba(251,113,133,0.4)] overflow-hidden">
+                <div class="text-3xl mb-2">🎉💖🎂✨🌸</div>
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-amber-300 font-myanmar">ဆုတောင်းပြည့်ပါစေဗျာ ✨💖</h3>
+                <p class="text-slate-100 font-myanmar text-base sm:text-xl mt-2 font-semibold">တောင်းထားတဲ့ဆုတွေအကုန်လုံး အမြန်ဆုံးပြည့်ဝပါစေ</p>
+                
+                <div class="mt-6 relative h-28 sm:h-32 w-full rounded-2xl bg-black/30 border border-rose-300/30 overflow-hidden flex items-center justify-center">
+                    <div class="absolute inset-x-4 bottom-3 h-1.5 rounded-full bg-gradient-to-r from-transparent via-rose-400/50 to-transparent"></div>
+                    <div class="runner-parade flex items-end gap-6 sm:gap-9 select-none">
+                        <div class="cute-hopper"><span class="text-xs text-rose-300 mini-heart-pop">💌</span><svg class="w-12 h-12" viewBox="0 0 80 80"><circle cx="40" cy="44" r="20" fill="#fff1f2" stroke="#fb7185" stroke-width="2"/><circle cx="33" cy="42" r="2.5" fill="#1e293b"/><circle cx="47" cy="42" r="2.5" fill="#1e293b"/><path d="M36 47 Q40 51 44 47" stroke="#e11d48" stroke-width="2" fill="none"/></svg></div>
+                        <div class="cute-hopper cute-hopper-delay-1"><span class="text-xs text-amber-300 mini-heart-pop">🎂</span><svg class="w-12 h-12" viewBox="0 0 80 80"><circle cx="40" cy="44" r="20" fill="#fde68a" stroke="#d97706" stroke-width="2"/><circle cx="33" cy="41" r="2.5" fill="#1e293b"/><circle cx="47" cy="41" r="2.5" fill="#1e293b"/></svg></div>
+                        <div class="cute-hopper cute-hopper-delay-2"><span class="text-xs text-pink-300 mini-heart-pop">💖</span><svg class="w-12 h-12" viewBox="0 0 80 80"><circle cx="40" cy="45" r="19" fill="#fdf2f8" stroke="#ec4899" stroke-width="2"/><circle cx="33" cy="43" r="2.5" fill="#1e293b"/><circle cx="47" cy="43" r="2.5" fill="#1e293b"/></svg></div>
+                        <div class="cute-hopper cute-hopper-delay-3"><span class="text-xs text-rose-300 mini-heart-pop">🌹</span><svg class="w-12 h-12" viewBox="0 0 80 80"><circle cx="40" cy="45" r="19" fill="#fef08a" stroke="#eab308" stroke-width="2"/><circle cx="33" cy="41" r="2.5" fill="#1e293b"/><circle cx="47" cy="41" r="2.5" fill="#1e293b"/></svg></div>
+                        <div class="cute-hopper cute-hopper-delay-4"><span class="text-xs text-amber-200 mini-heart-pop">🎈</span><svg class="w-12 h-12" viewBox="0 0 80 80"><circle cx="40" cy="45" r="19" fill="#ffffff" stroke="#334155" stroke-width="2"/><circle cx="33" cy="41" r="1.5" fill="#1e293b"/><circle cx="47" cy="41" r="1.5" fill="#1e293b"/></svg></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-4">
+                <button onclick="blowAllCandles()" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-400 via-rose-500 to-pink-500 text-slate-950 font-extrabold font-myanmar text-base sm:text-lg shadow-[0_0_30px_rgba(251,113,133,0.5)] hover:scale-105 transition flex items-center gap-2">
+                    <span>💨 ဖယောင်းတိုင် အကုန်မှုတ်မယ် (Blow Candles!)</span>
+                </button>
+                <button onclick="relightCandles()" class="px-5 py-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-amber-200 font-myanmar text-sm transition">🔥 မီးပြန်ထွန်းမယ်</button>
+            </div>
+        </section>
+
+        <!-- 5. WISH ENVELOPES -->
+        <section class="space-y-8">
+            <div class="text-center">
+                <span class="px-4 py-1 rounded-full bg-rose-500/15 border border-rose-400/30 text-rose-300 text-xs font-myanmar">💌 Special Love & Birthday Envelopes</span>
+                <h2 class="text-2xl sm:text-4xl font-bold font-myanmar text-gold-shimmer mt-3">ချစ်ရသော လူသားလေးအတွက် စာအိတ်လေးများ ✨</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div onclick="openWishModal(0)" class="glass-card glass-card-hover rounded-3xl p-6 cursor-pointer group">
+                    <div class="flex items-center justify-between mb-4"><span class="text-4xl">🧚‍♀️</span><span class="px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 text-xs">စာအိတ် #၁</span></div>
+                    <h3 class="text-xl font-bold text-amber-200 font-myanmar mb-2">၁၆ နှစ် တစ်ရက်လို ကောင်မလေး!</h3>
+                    <p class="text-slate-300 text-sm font-myanmar">အသက်တစ်နှစ် ပိုကြီးလာပေမယ့် ကိုယ့်မျက်လုံးထဲမှာတော့ ၁၆ နှစ် တစ်ရက်လို အမြဲချစ်ဖို့ကောင်းနေတုန်းပဲ...</p>
+                </div>
+                <div onclick="openWishModal(1)" class="glass-card glass-card-hover rounded-3xl p-6 cursor-pointer group">
+                    <div class="flex items-center justify-between mb-4"><span class="text-4xl">💰</span><span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs">စာအိတ် #၂</span></div>
+                    <h3 class="text-xl font-bold text-amber-200 font-myanmar mb-2">သူဌေးကြီး အမြန်ဖြစ်ပါစေ!</h3>
+                    <p class="text-slate-300 text-sm font-myanmar">ပိုက်ဆံတွေအများကြီးဝင်ပါစေ... အနည်းဆုံးတော့ ဒီနှစ် သင်္ကြန်မှာကဲသွားပါဦး!</p>
+                </div>
+                <div onclick="openWishModal(2)" class="glass-card glass-card-hover rounded-3xl p-6 cursor-pointer group">
+                    <div class="flex items-center justify-between mb-4"><span class="text-4xl">🧋</span><span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs">စာအိတ် #၃</span></div>
+                    <h3 class="text-xl font-bold text-amber-200 font-myanmar mb-2">စားသမျှ လုံးဝမဝပါစေနဲ့!</h3>
+                    <p class="text-slate-300 text-sm font-myanmar">မုန့်စားနိုင်စွမ်းအား 999999% နဲ့ မြင်သမျှအကုန်စားလည်း လုံးဝဝိတ်မတက်ဘဲ စားလေ ပိုလှလေ ဖြစ်ပါစေ...</p>
+                </div>
+                <div onclick="openWishModal(3)" class="glass-card glass-card-hover rounded-3xl p-6 cursor-pointer group md:col-span-1 lg:col-span-2 bg-gradient-to-br from-rose-500/15 to-purple-500/15">
+                    <div class="flex items-center justify-between mb-4"><span class="text-4xl">🌸</span><span class="px-3 py-1 rounded-full bg-pink-500/30 text-pink-200 text-xs">ဆုတောင်းလေး ✨</span></div>
+                    <h3 class="text-xl font-bold text-rose-200 font-myanmar mb-2">Warmest Birthday Wishes For You ✨</h3>
+                    <p class="text-slate-200 text-sm">May your days always be as bright and peaceful as your smile, and may every little wish you hold in your heart unfold beautifully...</p>
+                </div>
+                <div onclick="openLoveQuestionModal()" class="glass-card glass-card-hover rounded-3xl p-6 cursor-pointer group border-amber-400/60 bg-gradient-to-br from-amber-500/15 to-rose-500/25">
+                    <div class="flex items-center justify-between mb-4"><span class="text-4xl">💝</span><span class="px-3 py-1 rounded-full bg-amber-400 text-slate-950 font-bold text-xs">မေးစရာရှိတယ်!</span></div>
+                    <h3 class="text-xl font-bold text-amber-300 font-myanmar mb-2">ချစ်လား? (Yes / No) 🥺👉👈</h3>
+                    <p class="text-slate-100 text-sm font-myanmar">ချစ်ရသော လူသားလေးအတွက် အရေးကြီးဆုံး မေးခွန်းတစ်ခု ရှိပါတယ်...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. ENGLISH BIRTHDAY DEDICATION -->
+        <section class="glass-card rounded-3xl p-6 sm:p-12 relative overflow-hidden border-rose-400/40">
+            <div class="max-w-4xl mx-auto space-y-6 text-center relative z-10">
+                <span class="px-4 py-1.5 rounded-full bg-rose-500/20 text-rose-200 text-xs tracking-wider uppercase">✨ A Special Birthday Note For You</span>
+                <h2 class="font-cinematic text-3xl sm:text-5xl font-bold text-gold-shimmer">"To Someone Who Makes The World Brighter..."</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-transparent via-rose-400 to-transparent mx-auto"></div>
+                <div class="space-y-5 text-slate-100 font-editorial text-base sm:text-xl leading-relaxed text-left sm:text-center">
+                    <p>🌸 Today is all about celebrating your birthday, yet it also feels like a special reminder of how wonderful it is that someone as lovely and kind-hearted as you came into this world.</p>
+                    <p>✨ Even from afar, simply seeing your bright smile and watching you happy brings a quiet sense of warmth and peace. Your laughter and effortless charm have a magical way of making even the most tiring days feel lighter.</p>
+                    <p>🎂💖 Finally, my warmest wish for you is that every single day ahead blossoms with endless reasons to smile, that all the wishes you hold in your heart come true right on time... <strong>Happy Birthday to You! ✨🌹</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. POLAROID PHOTO GALLERY (Reading from images/ folder) -->
+        <section id="photoSection" class="space-y-8">
+            <div class="text-center max-w-3xl mx-auto">
+                <span class="px-4 py-1 rounded-full bg-rose-500/20 text-rose-300 text-xs font-myanmar">📸 Aesthetic Memories & Moments</span>
+                <h2 class="text-2xl sm:text-4xl font-bold font-myanmar text-gold-shimmer mt-3">ချစ်ရသော လူသားလေးရဲ့ အလှဆုံးပုံရိပ်များ ✨</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 pt-6 px-2">
+                <!-- 1 -->
+                <div class="polaroid-card transform -rotate-2">
+                    <div onclick="openLightbox(0)" class="relative aspect-[3/4] w-full rounded-lg overflow-hidden bg-slate-900 cursor-pointer group">
+                        <img src="images/IMG_2604.jpg" alt="Flower Field" class="w-full h-full object-cover transition duration-500 group-hover:scale-105" onerror="this.src='https://placehold.co/600x800/2a0a2e/fde68a?text=images/IMG_2604.jpg'">
+                    </div>
+                    <p class="mt-4 text-center font-editorial italic font-semibold text-slate-800 text-sm sm:text-base">Even in a field of blooming flowers, your smile shines the brightest. 🌼✨</p>
+                </div>
+                <!-- 2 -->
+                <div class="polaroid-card transform rotate-2">
+                    <div onclick="openLightbox(1)" class="relative aspect-[3/4] w-full rounded-lg overflow-hidden bg-slate-900 cursor-pointer group">
+                        <img src="images/IMG_2829.jpg" alt="Cactus Wall" class="w-full h-full object-cover transition duration-500 group-hover:scale-105" onerror="this.src='https://placehold.co/600x800/2a0a2e/fde68a?text=images/IMG_2829.jpg'">
+                    </div>
+                    <p class="mt-4 text-center font-editorial italic font-semibold text-slate-800 text-sm sm:text-base">Captured in a quiet, gentle moment full of effortless grace. 🌿💫</p>
+                </div>
+                <!-- 3 -->
+                <div class="polaroid-card transform -rotate-1">
+                    <div onclick="openLightbox(2)" class="relative aspect-[3/4] w-full rounded-lg overflow-hidden bg-slate-900 cursor-pointer group">
+                        <img src="images/IMG_3051.jpg" alt="Mirror Selfie" class="w-full h-full object-cover transition duration-500 group-hover:scale-105" onerror="this.src='https://placehold.co/600x800/2a0a2e/fde68a?text=images/IMG_3051.jpg'">
+                    </div>
+                    <p class="mt-4 text-center font-editorial italic font-semibold text-slate-800 text-sm sm:text-base">Always radiating the sweetest energy, no matter the day or the vibe. 🪞✨</p>
+                </div>
+                <!-- 4 -->
+                <div class="polaroid-card transform rotate-1">
+                    <div onclick="openLightbox(3)" class="relative aspect-[3/4] w-full rounded-lg overflow-hidden bg-slate-900 cursor-pointer group">
+                        <img src="images/IMG_1996.jpg" alt="Sunlight Smile" class="w-full h-full object-cover transition duration-500 group-hover:scale-105" onerror="this.src='https://placehold.co/600x800/2a0a2e/fde68a?text=images/IMG_1996.jpg'">
+                    </div>
+                    <p class="mt-4 text-center font-editorial italic font-semibold text-slate-800 text-sm sm:text-base">Golden sunlight and a smile that brings instant peace to the soul. ☀️🍃</p>
+                </div>
+                <!-- 5 -->
+                <div class="polaroid-card transform -rotate-2">
+                    <div onclick="openLightbox(4)" class="relative aspect-[3/4] w-full rounded-lg overflow-hidden bg-slate-900 cursor-pointer group">
+                        <img src="images/IMG_2086.jpg" alt="Night Light" class="w-full h-full object-cover transition duration-500 group-hover:scale-105" onerror="this.src='https://placehold.co/600x800/2a0a2e/fde68a?text=images/IMG_2086.jpg'">
+                    </div>
+                    <p class="mt-4 text-center font-editorial italic font-semibold text-slate-800 text-sm sm:text-base">Outshining the warmest lights in the quiet magic of the night. ✨🌙</p>
+                </div>
+                <!-- 6 -->
+                <div class="polaroid-card transform rotate-2">
+                    <div onclick="openLightbox(5)" class="relative aspect-[3/4] w-full rounded-lg overflow-hidden bg-slate-900 cursor-pointer group">
+                        <img src="images/IMG_2377.jpg" alt="Garden Stroll" class="w-full h-full object-cover transition duration-500 group-hover:scale-105" onerror="this.src='https://placehold.co/600x800/2a0a2e/fde68a?text=images/IMG_2377.jpg'">
+                    </div>
+                    <p class="mt-4 text-center font-editorial italic font-semibold text-slate-800 text-sm sm:text-base">Strolling under the night sky with the purest joy and elegance. 🌌💫</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="relative z-10 border-t border-white/10 py-10 text-center px-4">
+        <p class="font-cinematic text-xl text-gold-shimmer font-bold">HAPPY BIRTHDAY TO YOU! 🎂✨💖</p>
+        <p class="text-xs text-rose-300/80 font-myanmar mt-2">ချစ်ရသော လူသားလေးအတွက် အထူးဖန်တီးထားသော Aesthetic Birthday Webpage 💌</p>
+    </footer>
+
+    <!-- WISH MODAL -->
+    <div id="wishModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+        <div class="glass-card max-w-lg w-full rounded-3xl p-6 sm:p-8 relative border border-rose-300/40 text-center animate-float">
+            <button onclick="closeWishModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-slate-300">✕</button>
+            <div id="modalEmoji" class="text-6xl mb-4">💖</div>
+            <h3 id="modalTitle" class="text-2xl font-bold text-gold-shimmer font-myanmar mb-4"></h3>
+            <p id="modalBody" class="text-slate-100 font-myanmar text-base sm:text-lg leading-relaxed mb-6"></p>
+            <button onclick="closeWishModal()" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-rose-400 to-amber-400 text-slate-950 font-bold font-myanmar text-sm">💖 ပေးတဲ့ဆုနဲ့ ပြည့်ပါစေ! (Close)</button>
+        </div>
+    </div>
+
+    <!-- LOVE QUESTION MODAL -->
+    <div id="loveQuestionModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+        <div class="glass-card max-w-lg w-full rounded-3xl p-6 sm:p-8 relative border border-rose-300/50 text-center overflow-hidden min-h-[360px] flex flex-col justify-between">
+            <button onclick="closeLoveQuestionModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-slate-300">✕</button>
+            <div>
+                <div class="text-5xl mb-3 animate-bounce">🥺💖🌹</div>
+                <h3 class="text-xl sm:text-2xl font-bold text-amber-300 font-myanmar">ချစ်ရသော လူသားလေးကို မေးစရာတစ်ခုရှိပါတယ်! 💌</h3>
+                <p class="text-slate-100 font-myanmar text-lg sm:text-2xl font-bold mt-4">ကိုယ့်ကို <span class="text-rose-400 underline decoration-wavy">ချစ်လား</span> ဟင်? 🥺👉👈</p>
+            </div>
+            <div class="relative h-32 flex items-center justify-center gap-4 mt-6">
+                <button onclick="acceptLoveConfession()" class="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400 text-slate-950 font-extrabold font-myanmar text-base sm:text-lg shadow-[0_0_25px_rgba(251,113,133,0.6)] hover:scale-110 transition z-20">💖 ချစ်တယ် (Yes)</button>
+                <button id="runawayNoBtn" onmouseover="moveRunawayButton()" ontouchstart="moveRunawayButton()" onclick="moveRunawayButton()" class="px-5 py-3 rounded-2xl bg-white/10 border border-rose-400/40 text-rose-200 font-myanmar text-sm transition-all duration-200">😝 မချစ်ပါဘူး (No)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX MODAL -->
+    <div id="lightboxModal" onclick="closeLightbox()" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/90 backdrop-blur-lg">
+        <div onclick="event.stopPropagation()" class="relative max-w-2xl w-full flex flex-col items-center">
+            <button onclick="closeLightbox()" class="absolute -top-12 right-0 w-10 h-10 rounded-full bg-white/15 hover:bg-white/30 text-white flex items-center justify-center text-lg">✕</button>
+            <img id="lightboxImg" src="" alt="Preview" class="max-h-[75vh] w-auto rounded-2xl border-4 border-white shadow-[0_0_50px_rgba(251,113,133,0.4)] object-contain">
+            <p id="lightboxCaption" class="mt-4 text-center font-myanmar text-amber-200 text-base sm:text-lg font-bold px-4"></p>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toastBox" class="fixed bottom-5 right-5 z-50 hidden px-5 py-3.5 rounded-2xl glass-card border border-rose-400/50 text-amber-200 font-myanmar text-sm shadow-2xl items-center gap-3">
+        <span id="toastIcon">💖</span><span id="toastMessage"></span>
+    </div>
+
+    <script>
+        const trailerScenes = [
+            { sub: "Celebrating A Wonderful Soul", main: "ဒီနေ့လေးက... ထူးခြားတဲ့ လူသားလေးတစ်ယောက် လူ့လောကထဲ ရောက်လာခဲ့တဲ့ အလှဆုံးနေ့ရက်လေး 🌸✨" },
+            { sub: "Beauty & Cuteness Verified ✅", main: "ရုပ်ရည်ခန့်မှန်းချက်ကတော့ ၁၆ နှစ် တစ်ရက်လို... မုန့်စားနိုင်စွမ်းအားကတော့ 999999% (မြင်သမျှအကုန်စား) 😋🍰" },
+            { sub: "Special Birthday Forecast ✨", main: "အချစ်ရေးဟောကိန်းကတော့ ဒီနှစ်အကုန်လင်ရမည်! ဖယောင်းတိုင်တွေ၊ ကိတ်မုန့်မိုးတွေနဲ့ ဆုတောင်းလိုက်ရအောင် 🎂🕯️" },
+            { sub: "Wishing You Endless Happiness", main: "ချစ်ရသော လူသားလေးအတွက် အထူးဖန်တီးထားတဲ့ မွေးနေ့စာမျက်နှာလေးကို ဖွင့်ကြည့်လိုက်ပါဦးနော် 💌✨" }
+        ];
+        let currentScene = 0;
+
+        function advanceTrailer() {
+            currentScene = (currentScene + 1) % trailerScenes.length;
+            const stage = document.getElementById('trailerStage');
+            document.getElementById('trailerSub').textContent = trailerScenes[currentScene].sub;
+            document.getElementById('trailerMain').textContent = trailerScenes[currentScene].main;
+            for (let i = 0; i < 4; i++) {
+                document.getElementById('dot' + i).className = i === currentScene ? "w-8 h-1.5 rounded-full bg-rose-400 transition-all duration-300" : "w-2 h-1.5 rounded-full bg-white/20 transition-all duration-300";
+            }
+            playChimeSound();
+        }
+
+        function startMainExperience() {
+            const intro = document.getElementById('cinematicIntro');
+            intro.style.opacity = '0';
+            intro.style.pointerEvents = 'none';
+            setTimeout(() => intro.style.display = 'none', 900);
+            triggerMassiveBurst('mixed');
+            startBirthdayMusic();
+        }
+
+        let continuousRainActive = true;
+        const cakeEmojis = ['🎂', '🍰', '🧁', '🍓'];
+        const romanticEmojis = ['💖', '💘', '🌸', '🌹', '💕', '💝'];
+
+        function spawnFallingItem(type = null) {
+            const container = document.getElementById('fallingContainer');
+            if (!container || container.childElementCount > 45) return;
+            const item = document.createElement('div');
+            item.className = 'falling-item';
+            let pool = type === 'cake' ? cakeEmojis : (type === 'candle' ? ['🕯️'] : [...romanticEmojis, ...cakeEmojis]);
+            item.textContent = pool[Math.floor(Math.random() * pool.length)];
+            item.style.left = (Math.random() * 96) + 'vw';
+            item.style.fontSize = (22 + Math.random() * 22) + 'px';
+            const dur = 5 + Math.random() * 6;
+            item.style.animationDuration = dur + 's';
+            item.style.setProperty('--sway', ((Math.random() - 0.5) * 160) + 'px');
+            item.style.setProperty('--rot', ((Math.random() - 0.5) * 360) + 'deg');
+            item.onclick = (e) => { e.stopPropagation(); playPopSound(); item.textContent = '💖'; setTimeout(() => item.remove(), 200); };
+            container.appendChild(item);
+            setTimeout(() => item.remove(), dur * 1000);
+        }
+
+        setInterval(() => { if (continuousRainActive) spawnFallingItem(); }, 420);
+
+        function toggleContinuousRain() {
+            continuousRainActive = !continuousRainActive;
+            document.getElementById('rainToggleText').textContent = continuousRainActive ? 'မိုးရွာနေဆဲ (ON)' : 'မိုးရပ်ထား (OFF)';
+            showToast(continuousRainActive ? '💖 အချစ်မိုးများ ပြန်ဖွင့်လိုက်ပါပြီ!' : '⏸️ မိုးရွာခြင်းကို ခဏရပ်ထားပါသည်');
+        }
+
+        function triggerMassiveBurst(type) {
+            playChimeSound();
+            for (let i = 0; i < 28; i++) setTimeout(() => spawnFallingItem(type), i * 65);
+        }
+
+        const funnyQuotes = [
+            `"Happy Birthday to You! 🎂 အသက်တစ်နှစ် ပိုကြီးလာပေမယ့် စိတ်မပူပါနဲ့... ရုပ်ကတော့ ၁၆ နှစ် တစ်ရက်လိုပဲ ရှိသေးတယ်လို့ ပြောလို့ရပါသေးတယ်! 🥰✨"`,
+            `"Happy Birthday to You! 💰 ဒီနှစ်မွေးနေ့ကစပြီး ပိုက်ဆံတွေအများကြီးဝင်ပါစေ 💸✨"`,
+            `"Happy Birthday! 🌟 အသက်ကြီးလာလို့ ခါးနာတာ၊ ဒူးနာတာတွေ မဖြစ်ပါစေနဲ့ဦး... အနည်းဆုံးတော့ ဒီနှစ် သင်္ကြန်မှာကဲသွားပါဦး! 💦💃"`,
+            `"မုန့်စားနိုင်စွမ်းအား 999999% နဲ့ မြင်သမျှအကုန်စားပြီး လုံးဝဝိတ်မတက်ဘဲ တစ်နေ့တခြား ပိုလှလာပါစေ! 🍔🍕🍰"`
+        ];
+        let currentQuoteIndex = 0;
+        function nextFunnyQuote() {
+            currentQuoteIndex = (currentQuoteIndex + 1) % funnyQuotes.length;
+            document.getElementById('rotatingWishText').textContent = funnyQuotes[currentQuoteIndex];
+            playPopSound();
+        }
+
+        const candleStates = [true, true, true, true, true];
+        function blowSingleCandle(i) {
+            if (!candleStates[i]) return;
+            candleStates[i] = false;
+            document.getElementById('flame-' + i).classList.add('blown-out');
+            document.getElementById('smoke-' + i).classList.add('active');
+            playPopSound();
+            if (candleStates.every(s => !s)) {
+                document.getElementById('wishSuccessBanner').classList.remove('hidden');
+                triggerMassiveBurst('mixed');
+                if (!isPlayingMusic) startBirthdayMusic();
+                showToast('🎉 ဆုတောင်းပြည့်ပါစေဗျာ!');
+            }
+        }
+        function blowAllCandles() { for (let i = 0; i < 5; i++) setTimeout(() => blowSingleCandle(i), i * 120); }
+        function relightCandles() {
+            for (let i = 0; i < 5; i++) {
+                candleStates[i] = true;
+                document.getElementById('flame-' + i).classList.remove('blown-out');
+                document.getElementById('smoke-' + i).classList.remove('active');
+            }
+            document.getElementById('wishSuccessBanner').classList.add('hidden');
+            playChimeSound();
+        }
+
+        const envelopeWishes = [
+            { emoji: "🧚‍♀️💖", title: "၁၆ နှစ် တစ်ရက်လို ကောင်မလေး!", body: "Happy Birthday to You! အသက်တစ်နှစ် ပိုကြီးလာပေမယ့် စိတ်မပူပါနဲ့နော်... ရုပ်ရည်ခန့်မှန်းချက်ကတော့ ၁၆ နှစ် တစ်ရက်လိုပဲ ရှိသေးတယ်!" },
+            { emoji: "💰💎", title: "သူဌေးကြီး အမြန်ဖြစ်ပါစေ!", body: "ဒီမွေးနေ့ကစပြီး ပိုက်ဆံတွေအများကြီးဝင်ပါစေ! အနည်းဆုံးတော့ ဒီနှစ် သင်္ကြန်မှာကဲသွားပါဦး!" },
+            { emoji: "🧋🍰", title: "စားသမျှ လုံးဝမဝပါစေနဲ့!", body: "မုန့်စားနိုင်စွမ်းအား 999999% ပိုင်ရှင်လေးအတွက် မြင်သမျှအကုန်စားလည်း လုံးဝဝိတ်မတက်ဘဲ ပိုလှလာပါစေ!" },
+            { emoji: "🌸✨", title: "Warmest Birthday Wishes For You", body: "May your days always be as bright and peaceful as your smile. Whatever dreams and wishes you hold in your heart, may they unfold beautifully this year!" }
+        ];
+
+        function openWishModal(i) {
+            document.getElementById('modalEmoji').textContent = envelopeWishes[i].emoji;
+            document.getElementById('modalTitle').textContent = envelopeWishes[i].title;
+            document.getElementById('modalBody').textContent = envelopeWishes[i].body;
+            document.getElementById('wishModal').classList.remove('hidden');
+            document.getElementById('wishModal').classList.add('flex');
+            playChimeSound();
+        }
+        function closeWishModal() { document.getElementById('wishModal').classList.add('hidden'); }
+
+        function openLoveQuestionModal() {
+            document.getElementById('loveQuestionModal').classList.remove('hidden');
+            document.getElementById('loveQuestionModal').classList.add('flex');
+            document.getElementById('runawayNoBtn').style.transform = 'none';
+            playChimeSound();
+        }
+        function closeLoveQuestionModal() { document.getElementById('loveQuestionModal').classList.add('hidden'); }
+
+        function moveRunawayButton() {
+            const btn = document.getElementById('runawayNoBtn');
+            btn.style.transform = `translate(${(Math.random()-0.5)*210}px, ${(Math.random()-0.5)*130}px)`;
+            playPopSound();
+        }
+        function acceptLoveConfession() {
+            closeLoveQuestionModal();
+            triggerMassiveBurst('heart');
+            showToast('💖 "ချစ်တယ် (Yes)" လို့ ဖြေလိုက်ပြီနော်! ၁၀၀% မှန်သွားပါပြီ 💍💘');
+        }
+
+        const imagesList = [
+            { src: "images/IMG_2604.jpg", cap: "Even in a field of blooming flowers, your smile shines the brightest. 🌼✨" },
+            { src: "images/IMG_2829.jpg", cap: "Captured in a quiet, gentle moment full of effortless grace. 🌿💫" },
+            { src: "images/IMG_3051.jpg", cap: "Always radiating the sweetest energy, no matter the day or the vibe. 🪞✨" },
+            { src: "images/IMG_1996.jpg", cap: "Golden sunlight and a smile that brings instant peace to the soul. ☀️🍃" },
+            { src: "images/IMG_2086.jpg", cap: "Outshining the warmest lights in the quiet magic of the night. ✨🌙" },
+            { src: "images/IMG_2377.jpg", cap: "Strolling under the night sky with the purest joy and elegance. 🌌💫" }
+        ];
+
+        function openLightbox(i) {
+            document.getElementById('lightboxImg').src = imagesList[i].src;
+            document.getElementById('lightboxCaption').textContent = imagesList[i].cap;
+            document.getElementById('lightboxModal').classList.remove('hidden');
+            document.getElementById('lightboxModal').classList.add('flex');
+            playChimeSound();
+        }
+        function closeLightbox() { document.getElementById('lightboxModal').classList.add('hidden'); }
+
+        let isPlayingMusic = false;
+        let melodyTimeouts = [];
+        const notes = [
+            { n: "C4", d: 250 }, { n: "C4", d: 250 }, { n: "D4", d: 500 }, { n: "C4", d: 500 }, { n: "F4", d: 500 }, { n: "E4", d: 900 },
+            { n: "C4", d: 250 }, { n: "C4", d: 250 }, { n: "D4", d: 500 }, { n: "C4", d: 500 }, { n: "G4", d: 500 }, { n: "F4", d: 900 }
+        ];
+
+        async function startBirthdayMusic() {
+            if (typeof Tone === 'undefined') return;
+            try {
+                await Tone.start();
+                isPlayingMusic = true;
+                document.getElementById('musicIcon').textContent = '🔊';
+                document.getElementById('musicText').textContent = 'သီချင်းပိတ်';
+                playMelody();
+            } catch (e) {}
+        }
+        function playMelody() {
+            melodyTimeouts.forEach(clearTimeout);
+            melodyTimeouts = [];
+            if (!isPlayingMusic) return;
+            const synth = new Tone.Synth().toDestination();
+            synth.volume.value = -10;
+            let time = 0;
+            notes.forEach(item => {
+                let tid = setTimeout(() => { if (isPlayingMusic) synth.triggerAttackRelease(item.n, item.d/1000); }, time);
+                melodyTimeouts.push(tid);
+                time += item.d + 70;
+            });
+            let loopTid = setTimeout(() => { if (isPlayingMusic) playMelody(); }, time + 1000);
+            melodyTimeouts.push(loopTid);
+        }
+        function toggleBirthdayMusic() {
+            if (isPlayingMusic) {
+                isPlayingMusic = false;
+                melodyTimeouts.forEach(clearTimeout);
+                document.getElementById('musicIcon').textContent = '🎵';
+                document.getElementById('musicText').textContent = 'သီချင်းဖွင့်';
+                showToast('🔇 သီချင်းသံ ခဏပိတ်ထားပါသည်');
+            } else {
+                startBirthdayMusic();
+                showToast('🎵 Happy Birthday သီချင်းဖွင့်နေပါပြီ!');
+            }
+        }
+        function playPopSound() {
+            try { new Tone.MembraneSynth().toDestination().triggerAttackRelease("C3", "16n"); } catch (e) {}
+        }
+        function playChimeSound() {
+            try { new Tone.Synth().toDestination().triggerAttackRelease("G5", "16n"); } catch (e) {}
+        }
+
+        function showToast(msg) {
+            const box = document.getElementById('toastBox');
+            document.getElementById('toastMessage').textContent = msg;
+            box.classList.remove('hidden');
+            box.classList.add('flex');
+            setTimeout(() => { box.classList.add('hidden'); box.classList.remove('flex'); }, 3500);
+        }
+
+        window.onload = function() {
+            const canvas = document.getElementById('bgCanvas');
+            const ctx = canvas.getContext('2d');
+            let w, h, particles = [];
+            function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+            window.addEventListener('resize', resize);
+            resize();
+            for (let i = 0; i < 65; i++) {
+                particles.push({ x: Math.random()*w, y: Math.random()*h, r: Math.random()*2.8+0.8, dx: (Math.random()-0.5)*0.35, dy: (Math.random()-0.5)*0.35, alpha: Math.random()*0.65+0.15, hue: Math.random()>0.5?42:345 });
+            }
+            function draw() {
+                ctx.clearRect(0, 0, w, h);
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+                    ctx.fillStyle = `hsla(${p.hue}, 90%, 75%, ${p.alpha})`;
+                    ctx.fill();
+                    p.x += p.dx; p.y += p.dy;
+                    if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+                    if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+                });
+                requestAnimationFrame(draw);
+            }
+            draw();
+        };
+    </script>
+</body>
+</html>
